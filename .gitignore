@@ -1,5 +1,0 @@
-#no quiero que aparezca
-composer.json
-composer.lock
-vendor/
-.phpunit.result.cache
