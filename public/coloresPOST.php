@@ -1,7 +1,5 @@
 <?php
 const URL_DEFECTO = "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
-//la idea es que si no hay post muestre cookie y si no que se muestre la imagen por defecto y lo almaceno en una variabel
-$imagen = $_POST['ans'] ?? $_COOKIE['img'] ?? URL_DEFECTO;
 
 //si hay post se almacena en cookie y se muestra la imagen de la cookie
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
