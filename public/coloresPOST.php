@@ -1,19 +1,42 @@
 <?php
 
-//la idea es que si no hay cookie ni post se muestre la imagen por defecto y lo almaceno en una variabel
+//la idea es que si no hay post muestre cookie y si no que se muestre la imagen por defecto y lo almaceno en una variabel
 $imagen = $_POST['ans'] ?? $_COOKIE['img'] ?? "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
 
 //si hay post se almacena en cookie y se muestra la imagen de la cookie
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && strlen($_POST['ans']) > 0) {
-    $url = $_POST['ans'] ?? "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
-    $cookie_name = "img";
-    $cookie_value = $_POST['ans'];
-    setcookie($cookie_name, $cookie_value, time() + (86400 * 15), "/"); // 86400 = 1 dia
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //cambio de verificacion 'ans' para poder usar los sliders de colores sin tener que poner nada en el input
+    
+    if (strlen($_POST['ans']) > 0) {
+        //si hay post se almacena en cookie y se muestra la imagen de la cookie 
+        //si saco el setcookie de aqui se guardaria con un valor vcio
+        $url = $_POST['ans'];
+        $cookie_name = "img";
+        $cookie_value = $_POST['ans'];
+        setcookie($cookie_name, $cookie_value, time() + (86400 * 15), "/"); // 86400 = 1 dia
+    } else {
+        $url = $_COOKIE['img'] ?? "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
+    }
+
+    //seccion colores
+    $rojo = $_POST['rojo'];
+    $verde = $_POST['verde'];    
+    $azul = $_POST['azul'];
+    //establecemos las cookies para los colores
+    setcookie("rojo", $rojo, time() + (86400 * 15), "/");
+    setcookie("verde", $verde, time() + (86400 * 15), "/");
+    setcookie("azul", $azul, time() + (86400 * 15), "/");
+    $color = "rgb($rojo, $verde, $azul)";
 }else{
     //si no hay post se muestra la imagen de la cookie(s es qeu la recibo) o la imagen por defecto
     $url = $_COOKIE['img'] ?? "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
+    //lo mismo para los colores, si no hay post se muestra el color de la cookie o el color blanco por defecto
+    $rojo = $_COOKIE['rojo'] ?? 255;
+    $verde = $_COOKIE['verde'] ?? 255;
+    $azul = $_COOKIE['azul'] ?? 255;
+    $color = "rgb($rojo, $verde, $azul)";
 }
-
+    
 ?>
 
 <!DOCTYPE HTML>
@@ -43,14 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && strlen($_POST['ans']) > 0) {
             <h2>Elecci&oacute;n de colores</h2>
             <form name="calculator" action="" method="post">
                 <!-- Escribe el resultado como valor de la propiedad value -->
-                <input type="textfield" name="ans" value=""  style="background-color:rgb(255, 255, 255)">
+                <input type="textfield" name="ans" value=""  style="background-color:<?= $color ?>">
                 <br>
                 <label for="rojo">Rojo:</label>
-                <input type="range" name="rojo" value="" min="0" max="255">
+                <input type="range" name="rojo" value="<?= $rojo ?>" min="0" max="255">
                 <label for="verde">Verde:</label>
-                <input type="range" name="verde" value="" min="0" max="255">
+                <input type="range" name="verde" value="<?= $verde ?>" min="0" max="255">
                 <label for="azul">Azul:</label>
-                <input type="range" name="azul" value="" min="0" max="255">
+                <input type="range" name="azul" value="<?= $azul ?>" min="0" max="255">
                 <input type="submit" value="Mostrar color">
                 <input type="reset" value="Cancelar">
             </form>
