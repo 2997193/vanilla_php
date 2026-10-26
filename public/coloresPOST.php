@@ -1,20 +1,17 @@
 <?php
-//pruebas
-$url = $_POST['ans'] ?? "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
 
-//terminar de arreglar y corregir , despues tengo que crear constante y separar la variable y seguramente sea mejor usar 
-// request method === post y asignar segun si recibe con $cookie o null coalesce
+//la idea es que si no hay cookie ni post se muestre la imagen por defecto y lo almaceno en una variabel
+$imagen = $_POST['ans'] ?? $_COOKIE['img'] ?? "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
 
-
-if (isset($_POST['submit'])){
-$cookie_name = "img";
-$cookie_value = $_POST['ans'];
-setcookie($cookie_name, $cookie_value, time() + (86400 * 15), "/");
-
-}
-
-if(strlen($url) == 0){
-    $url ="https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
+//si hay post se almacena en cookie y se muestra la imagen de la cookie
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && strlen($_POST['ans']) > 0) {
+    $url = $_POST['ans'] ?? "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
+    $cookie_name = "img";
+    $cookie_value = $_POST['ans'];
+    setcookie($cookie_name, $cookie_value, time() + (86400 * 15), "/"); // 86400 = 1 dia
+}else{
+    //si no hay post se muestra la imagen de la cookie(s es qeu la recibo) o la imagen por defecto
+    $url = $_COOKIE['img'] ?? "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
 }
 
 ?>
