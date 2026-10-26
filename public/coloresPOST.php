@@ -1,7 +1,7 @@
 <?php
-
+const URL_DEFECTO = "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
 //la idea es que si no hay post muestre cookie y si no que se muestre la imagen por defecto y lo almaceno en una variabel
-$imagen = $_POST['ans'] ?? $_COOKIE['img'] ?? "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
+$imagen = $_POST['ans'] ?? $_COOKIE['img'] ?? URL_DEFECTO;
 
 //si hay post se almacena en cookie y se muestra la imagen de la cookie
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cookie_value = $_POST['ans'];
         setcookie($cookie_name, $cookie_value, time() + (86400 * 15), "/"); // 86400 = 1 dia
     } else {
-        $url = $_COOKIE['img'] ?? "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
+        $url = $_COOKIE['img'] ?? URL_DEFECTO;
     }
 
     //seccion colores
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $color = "rgb($rojo, $verde, $azul)";
 }else{
     //si no hay post se muestra la imagen de la cookie(s es qeu la recibo) o la imagen por defecto
-    $url = $_COOKIE['img'] ?? "https://miro.medium.com/max/4800/1*r2fR_OBcBCSUtfLLaTX3JA.png";
+    $url = $_COOKIE['img'] ?? URL_DEFECTO;
     //lo mismo para los colores, si no hay post se muestra el color de la cookie o el color blanco por defecto
     $rojo = $_COOKIE['rojo'] ?? 255;
     $verde = $_COOKIE['verde'] ?? 255;
