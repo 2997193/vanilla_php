@@ -18,9 +18,13 @@ declare(strict_types=1);
 ---
 antes de entrar el valor de phpsseid= 3e4133ef8c0dc6c6b1dc686454633bb1
 despues de entrar= 7149692b314c27e7c351c52adff6776a
-
-------|TERMINAR EJERCICIOS|------    
- */
+---
+al estar autenticados y intentamos entrar a RA4_login.php nos da un codigo de estado 303, nos redirige con location a RA4_perfil.php
+---
+Al cerrar sesion y intentamos acceder de vuelta a RA4_perfil.php nos redirige a login.php
+---
+al acceder con elena, el rol que nos sale es "Rol: docente"
+*/
  ?>
  <!DOCTYPE html>
  <html lang="es">
