@@ -42,7 +42,9 @@ al acceder con elena, el rol que nos sale es "Rol: docente"
    <p>Usuario: <?= e($usuario['firstName'] . ' ' . $usuario['lastName']) ?></p>
    <p>Email: <?= e($usuario['email']) ?></p>
    <p>Rol: <?= e($usuario['rol']) ?></p>
-
+    <?php if ($usuario['rol'] === 'alumno'): ?>
+      <p><a href="RA4_miCurriculo.php">Mi currículo</a></p>
+    <?php endif; ?>
    <form action="RA4_logout.php" method="post">
      <button type="submit">Cerrar sesión</button>
    </form>
